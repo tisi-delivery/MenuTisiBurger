@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tisi Burger - Calculadora de Pedidos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding-bottom: 120px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 10px;
+            border-bottom: 2px solid #ff6b00;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #ff6b00;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .header p {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .section-title {
+            color: #ff6b00;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin: 20px 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+        .item-card {
+            background-color: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-info {
+            flex: 1;
+            padding-right: 10px;
+        }
+        .item-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .item-desc {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.3;
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            background-color: #222;
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid #333;
+        }
+        .btn-qty {
+            background-color: #ff6b00;
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-qty:active {
+            background-color: #e05e00;
+        }
+        .qty-num {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .total-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #121212;
+            border-top: 2px solid #ff6b00;
+            padding: 15px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+        }
+        .total-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .total-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .total-price {
+            font-size: 22px;
+            color: #ff6b00;
+            font-weight: 800;
+        }
+        .shipping-note {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        .btn-whatsapp {
+            width: 100%;
+            background-color: #25d366;
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+        .btn-whatsapp:active {
+            background-color: #1ebc57;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Tisi Burger</h1>
+        <p>Dobles y con papas fritas incluidas</p>
+    </div>
+
+    <div class="section-title">Hamburguesas</div>
+
+    <!-- Cheeseburger -->
+    <div class="item-card" data-price="12000" data-name="Cheeseburger">
+        <div class="item-info">
+            <div class="item-title">Cheeseburger ($12.000)</div>
+            <div class="item-desc">Doble medallón, doble cheddar.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Memexita -->
+    <div class="item-card" data-price="13000" data-name="Memexita">
+        <div class="item-info">
+            <div class="item-title">Memexita ($13.000)</div>
+            <div class="item-desc">Doble medallón, lechuga, tomate, jamón y queso.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Tisi -->
+    <div class="item-card" data-price="13500" data-name="Tisi">
+        <div class="item-info">
+            <div class="item-title">Tisi ($13.500)</div>
+            <div class="item-desc">Doble medallón, cheddar, cebolla caramelizada, huevo, panceta y salsa big.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Pepex -->
+    <div class="item-card" data-price="13500" data-name="Pepex">
+        <div class="item-info">
+            <div class="item-title">Pepex ($13.500)</div>
+            <div class="item-desc">Doble medallón, cheddar, cebolla crispy, huevo y salsa alioli.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Titix -->
+    <div class="item-card" data-price="14000" data-name="Titix">
+        <div class="item-info">
+            <div class="item-title">Titix ($14.000)</div>
+            <div class="item-desc">Doble medallón, cheddar, pepinillos, cebolla en cubos, ketchup y mostaza.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Cheesebacon -->
+    <div class="item-card" data-price="14000" data-name="Cheesebacon">
+        <div class="item-info">
+            <div class="item-title">Cheesebacon ($14.000)</div>
+            <div class="item-desc">Doble medallón, cheddar, panceta, salsa big opcional.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Zito -->
+    <div class="item-card" data-price="15000" data-name="Zito">
+        <div class="item-info">
+            <div class="item-title">Zito ($15.000)</div>
+            <div class="item-desc">Doble medallón, cheddar, roquefort, cebolla caramelizada y panceta.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Sid -->
+    <div class="item-card" data-price="16000" data-name="Sid">
+        <div class="item-info">
+            <div class="item-title">Sid ($16.000)</div>
+            <div class="item-desc">Triple medallón, provoleta crocante, panceta y salsa barbacoa.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Koda-boom -->
+    <div class="item-card" data-price="17500" data-name="Koda-boom">
+        <div class="item-info">
+            <div class="item-title">Koda-boom ($17.500)</div>
+            <div class="item-desc">Cuádruple medallón, cheddar, panceta extra y salsa especial.<br>Viene con fritas.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <div class="section-title">Acompañamientos</div>
+
+    <!-- Papas con Cheddar -->
+    <div class="item-card" data-price="7000" data-name="Papas con Cheddar">
+        <div class="item-info">
+            <div class="item-title">Papas con Cheddar ($7.000)</div>
+            <div class="item-desc">Porción abundante de papas fritas con salsa cheddar.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Papas Cheddar y Panceta -->
+    <div class="item-card" data-price="8500" data-name="Papas Cheddar y Panceta">
+        <div class="item-info">
+            <div class="item-title">Papas Cheddar y Panceta ($8.500)</div>
+            <div class="item-desc">Porción de papas con cheddar y panceta crocante.</div>
+        </div>
+        <div class="qty-controls">
+            <button class="btn-qty" onclick="changeQty(this, -1)">-</button>
+            <span class="qty-num">0</span>
+            <button class="btn-qty" onclick="changeQty(this, 1)">+</button>
+        </div>
+    </div>
+
+    <!-- Barra de Total fija abajo -->
+    <div class="total-bar">
+        <div class="shipping-note">+ Envío: $3.000</div>
+        <div class="total-info">
+            <span class="total-text">Total:</span>
+            <span class="total-price" id="totalAmount">$3.000</span>
+        </div>
+        <button class="btn-whatsapp" onclick="sendOrder()">Enviar Pedido por WhatsApp</button>
+    </div>
+
+    <script>
+        const SHIPPING_COST = 3000;
+
+        function changeQty(btn, delta) {
+            const qtySpan = btn.parentElement.querySelector('.qty-num');
+            let qty = parseInt(qtySpan.textContent) + delta;
+            if (qty < 0) qty = 0;
+            qtySpan.textContent = qty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let itemsTotal = 0;
+            let hasItems = false;
+            
+            document.querySelectorAll('.item-card').forEach(card => {
+                const price = parseInt(card.getAttribute('data-price'));
+                const qty = parseInt(card.querySelector('.qty-num').textContent);
+                if (qty > 0) {
+                    itemsTotal += price * qty;
+                    hasItems = true;
+                }
+            });
+
+            const finalTotal = hasItems ? (itemsTotal + SHIPPING_COST) : SHIPPING_COST;
+            document.getElementById('totalAmount').textContent = `$${finalTotal.toLocaleString('es-AR')}`;
+        }
+
+        function sendOrder() {
+            let orderText = "¡Hola Tisi Burger! Quiero hacer un pedido:\n\n";
+            let hasItems = false;
+            let itemsTotal = 0;
+
+            document.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                const price = parseInt(card.getAttribute('data-price'));
+                const qty = parseInt(card.querySelector('.qty-num').textContent);
+
+                if (qty > 0) {
+                    const subtotal = price * qty;
+                    orderText += `• ${qty}x ${name} ($${subtotal.toLocaleString('es-AR')})\n`;
+                    itemsTotal += subtotal;
+                    hasItems = true;
+                }
+            });
+
+            if (!hasItems) {
+                alert("Por favor selecciona al menos un producto.");
+                return;
+            }
+
+            orderText += `\n• Envío: $${SHIPPING_COST.toLocaleString('es-AR')}`;
+            orderText += `\n*TOTAL: $${(itemsTotal + SHIPPING_COST).toLocaleString('es-AR')}*`;
+
+            const encodedText = encodeURIComponent(orderText);
+            window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+        }
+    </script>
+</body>
+  </html>
